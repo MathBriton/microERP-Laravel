@@ -2,47 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(name="Customers", description="Endpoints de clientes")
+ * @OA\PathItem()  <-- ESSENCIAL
+ */
 class CustomerController extends Controller
 {
+    protected $service;
+
+    public function __construct(CustomerService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/customers",
+     *     summary="Lista todos os clientes",
+     *     tags={"Customers"},
+     *     @OA\Response(response=200, description="Lista de clientes")
+     * )
      */
     public function index()
     {
-        //
+        return response()->json($this->service->getAll());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Get(
+     *     path="/customers/{id}",
+     *     summary="Mostra um cliente pelo ID",
+     *     tags={"Customers"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Cliente encontrado"),
+     *     @OA\Response(response=404, description="Cliente não encontrado")
+     * )
      */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json($this->service->getById($id));
     }
 }

@@ -1,20 +1,17 @@
 <?php
-
 namespace App\Repositories;
 
-use App\Models\Product;
 use App\Interfaces\Repositories\ProductRepositoryInterface;
+use App\Models\Product;
 
-class ProductRepository extends BaseRepository implements ProductRepositoryInterface
+class ProductRepository implements ProductRepositoryInterface
 {
-    public function _construct(Product $model)
-    {
-        parent::__construct($model);
-    }
-
-     // Exemplo:
-    // public function findBySku(string $sku)
-    // {
-    //     return $this->model->where('sku', $sku)->first();
-    // }
+    public function all(array $columns = ['*'])
+{
+    return Product::all($columns);
+}
+    public function find($id) { return Product::findOrFail($id); }
+    public function create(array $data) { return Product::create($data); }
+    public function update($id, array $data) { $p = $this->find($id); $p->update($data); return $p; }
+    public function delete($id) { $p = $this->find($id); return $p->delete(); }
 }

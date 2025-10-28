@@ -2,7 +2,11 @@
 
 namespace App\Interfaces\Repositories;
 
-interface InvoiceRepositoryInterface extends BaseRepositoryInterface
+interface InvoiceRepositoryInterface
 {
-    
+    public function all(array $columns = ['*']);
+    public function find($id);
+    public function create(array $data);
+    public function update($id, array $data);
+    public function delete($id);
 }

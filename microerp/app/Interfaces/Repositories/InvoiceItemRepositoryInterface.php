@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Repositories;
 
-interface ProductRepositoryInterface
+interface InvoiceItemRepositoryInterface
 {
     public function all(array $columns = ['*']);
     public function find($id);

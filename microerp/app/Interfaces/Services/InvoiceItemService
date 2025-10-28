@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Services;
+
+use App\Interfaces\Repositories\InvoiceItemRepositoryInterface;
+
+class InvoiceItemService
+{
+    protected $itemRepo;
+
+    public function __construct(InvoiceItemRepositoryInterface $itemRepo)
+    {
+        $this->itemRepo = $itemRepo;
+    }
+
+    public function getAll()
+    {
+        return $this->itemRepo->all();
+    }
+
+    public function getById($id)
+    {
+        return $this->itemRepo->find($id);
+    }
+
+    public function create(array $data)
+    {
+        return $this->itemRepo->create($data);
+    }
+
+    public function update($id, array $data)
+    {
+        return $this->itemRepo->update($id, $data);
+    }
+
+    public function delete($id)
+    {
+        return $this->itemRepo->delete($id);
+    }
+}
