@@ -1,68 +1,24 @@
-🔧 Tecnologias
+# ![microERP](https://img.shields.io/badge/microERP-Laravel-orange) microERP
 
-PHP 8.4
+**microERP** é um sistema ERP simplificado desenvolvido em **PHP 8.4** usando **Laravel**, **SQLite**, arquitetura **REST**, padrões **SOLID** e documentação via **Swagger (OpenAPI)**.
 
-Laravel 10
+Inclui módulos de **Clientes (Customer)**, **Produtos (Product)**, **Faturas (Invoice)** e **Itens de Fatura (InvoiceItem)** com **Controllers, Services e Repositories** seguindo PSR-4.
 
-SQLite
+---
 
-Swagger (via L5-Swagger)
+## 🚀 Tecnologias Utilizadas
 
-Composer
+![PHP](https://img.shields.io/badge/PHP-8.4-blue)
+![Laravel](https://img.shields.io/badge/Laravel-10-red)
+![SQLite](https://img.shields.io/badge/SQLite-lightgrey)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-yellowgreen)
+![Composer](https://img.shields.io/badge/Composer-v2.7-blue)
 
-PSR-4 (autoload)
+---
 
-🚀 Instalação
-Pré-requisitos
+## 📦 Estrutura do Projeto
 
-PHP >= 8.4
-
-Composer
-
-SQLite (instalado no Ubuntu: sudo apt install sqlite3)
-
-Git
-
-Passos
-
-Clone o repositório:
-
-git clone <seu-repo-aqui> microerp
-cd microerp
-
-
-Instale as dependências:
-
-composer install
-
-
-Configure o ambiente:
-
-cp .env.example .env
-php artisan key:generate
-
-
-Configure o SQLite (caso ainda não tenha criado o arquivo):
-
-touch database/database.sqlite
-
-
-E no .env ajuste:
-
-DB_CONNECTION=sqlite
-DB_DATABASE=/caminho/para/seu/projeto/database/database.sqlite
-
-
-Execute as migrações:
-
-php artisan migrate
-
-
-Gere a documentação Swagger:
-
-php artisan l5-swagger:generate
-
-📦 Estrutura do Projeto
+```
 app/
 ├── Http/
 │   ├── Controllers/
@@ -75,60 +31,131 @@ config/
 ├── l5-swagger.php
 routes/
 └── api.php
+database/
+.env
+composer.json
+README.md
+```
 
-🗂 Endpoints da API
+---
 
-A API segue o padrão REST.
+## ⚡ Instalação Rápida
 
-Customers
-Método	Endpoint	Descrição
-GET	/api/customers	Lista todos clientes
-GET	/api/customers/{id}	Mostra cliente pelo ID
-Products
-Método	Endpoint	Descrição
-GET	/api/products	Lista todos produtos
-POST	/api/products	Cria um produto
-GET	/api/products/{id}	Mostra produto pelo ID
-PUT	/api/products/{id}	Atualiza produto
-DELETE	/api/products/{id}	Deleta produto
-Invoices
-Método	Endpoint	Descrição
-GET	/api/invoices	Lista todas faturas
-POST	/api/invoices	Cria uma fatura
-GET	/api/invoices/{id}	Mostra fatura pelo ID
-PUT	/api/invoices/{id}	Atualiza fatura
-DELETE	/api/invoices/{id}	Deleta fatura
-Swagger UI
+### Pré-requisitos
 
-Acesse a documentação interativa em:
+* PHP >= 8.4
+* Composer
+* SQLite (`sudo apt install sqlite3`)
+* Git
 
-http://127.0.0.1:8000/docs
+### Passos
 
-🔐 Injeção de Dependência
+```bash
+# Clonar o projeto
+git clone <seu-repo-aqui> microerp
+cd microerp
 
-O projeto utiliza Service Providers para injeção de dependência, ligando Interfaces aos Repositories:
+# Instalar dependências
+composer install
 
+# Configurar ambiente
+cp .env.example .env
+php artisan key:generate
+
+# Criar banco SQLite
+touch database/database.sqlite
+
+# Atualizar .env
+DB_CONNECTION=sqlite
+DB_DATABASE=/caminho/para/database/database.sqlite
+
+# Executar migrações
+php artisan migrate
+
+# Gerar documentação Swagger
+php artisan l5-swagger:generate
+
+# Rodar servidor local
+php artisan serve
+```
+
+---
+
+## 📖 Endpoints da API
+
+A API segue o padrão **REST**.
+
+### Customers
+
+| Método | Endpoint              | Descrição             |
+| ------ | --------------------- | --------------------- |
+| GET    | `/api/customers`      | Listar todos clientes |
+| GET    | `/api/customers/{id}` | Buscar cliente por ID |
+
+### Products
+
+| Método | Endpoint             | Descrição             |
+| ------ | -------------------- | --------------------- |
+| GET    | `/api/products`      | Listar todos produtos |
+| POST   | `/api/products`      | Criar produto         |
+| GET    | `/api/products/{id}` | Buscar produto por ID |
+| PUT    | `/api/products/{id}` | Atualizar produto     |
+| DELETE | `/api/products/{id}` | Deletar produto       |
+
+### Invoices
+
+| Método | Endpoint             | Descrição            |
+| ------ | -------------------- | -------------------- |
+| GET    | `/api/invoices`      | Listar todas faturas |
+| POST   | `/api/invoices`      | Criar fatura         |
+| GET    | `/api/invoices/{id}` | Buscar fatura por ID |
+| PUT    | `/api/invoices/{id}` | Atualizar fatura     |
+| DELETE | `/api/invoices/{id}` | Deletar fatura       |
+
+### Swagger UI
+
+Acesse a documentação interativa:
+
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+---
+
+## 🔄 Injeção de Dependência
+
+O projeto segue **Service Provider** para injeção de dependência:
+
+```php
 $this->app->bind(
     \App\Interfaces\Repositories\CustomerRepositoryInterface::class,
     \App\Repositories\CustomerRepository::class
 );
+```
 
-💡 Boas Práticas
+---
 
-Seguir SOLID e Clean Architecture
+## 💡 Boas Práticas
 
-Controllers delegam lógica para Services
+* **SOLID e Clean Architecture**
+* Controllers delegam lógica para **Services**
+* Services delegam acesso a dados para **Repositories**
+* Models usam **Eloquent ORM**
+* Documentação via **Swagger / OpenAPI**
 
-Services delegam acesso a dados para Repositories
+---
 
-Todas as models utilizam Eloquent ORM
+## 📝 Comandos Úteis
 
-⚡ Comandos úteis
+```bash
+# Limpar cache de configuração
+php artisan config:clear
 
-Limpar cache de configuração: php artisan config:clear
+# Limpar cache de rotas
+php artisan route:clear
 
-Limpar cache de rotas: php artisan route:clear
+# Gerar documentação Swagger
+php artisan l5-swagger:generate
 
-Gerar documentação Swagger: php artisan l5-swagger:generate
+# Rodar servidor local
+php artisan serve
+```
 
-Rodar servidor local: php artisan serve
